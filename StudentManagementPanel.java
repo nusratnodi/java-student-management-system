@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.table.DefaultTableModel;  
 
 public class StudentManagementPanel extends JPanel {
     private JTextField nameField, idField, gradeField;
