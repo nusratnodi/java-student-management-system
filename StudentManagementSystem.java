@@ -5,7 +5,6 @@ public class StudentManagementSystem extends JFrame {
     private JPanel mainPanel;
     private CardLayout cardLayout;
     private JPanel studentManagementPanel;
-    private JPanel cgpaCalculatorPanel;
 
     public StudentManagementSystem() {
         setTitle("Student Management System by Nusrat Jahan");
@@ -29,18 +28,16 @@ public class StudentManagementSystem extends JFrame {
 
         // Style sidebar buttons
         JButton studentManagementBtn = StyledButton.createStyledButton("Student Management", new Color(52, 152, 219));
-        JButton cgpaCalculatorBtn = StyledButton.createStyledButton("CGPA Calculator", new Color(52, 152, 219));
+
 
         studentManagementBtn.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
-        cgpaCalculatorBtn.setMaximumSize(new Dimension(Integer.MAX_VALUE, 50));
 
         studentManagementBtn.addActionListener(e -> cardLayout.show(mainPanel, "StudentManagement"));
-        cgpaCalculatorBtn.addActionListener(e -> cardLayout.show(mainPanel, "CGPACalculator"));
+
 
         sidebar.add(Box.createVerticalStrut(20));
         sidebar.add(studentManagementBtn);
         sidebar.add(Box.createVerticalStrut(10));
-        sidebar.add(cgpaCalculatorBtn);
 
         // Create main panel with CardLayout
         cardLayout = new CardLayout();
@@ -49,10 +46,9 @@ public class StudentManagementSystem extends JFrame {
 
         // Initialize panels
         studentManagementPanel = new StudentManagementPanel().createPanel();
-        cgpaCalculatorPanel = new CGPACalculatorPanel().createPanel();
 
         mainPanel.add(studentManagementPanel, "StudentManagement");
-        mainPanel.add(cgpaCalculatorPanel, "CGPACalculator");
+
 
         // Set up layout
         setLayout(new BorderLayout());
