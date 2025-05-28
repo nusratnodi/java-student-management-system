@@ -2,135 +2,82 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class CGPACalculatorPanel {
-    private JPanel panel;
-    private JTextField[] marksFields;
-    private JTextField[] creditFields;
+public class CGPACalculatorPanel extends JPanel {
+    private JTextField[] marksFields, creditFields;
+    private JButton calculateButton, clearButton;
     private JLabel resultLabel;
-    private static final int NUM_COURSES = 5;
 
-    public JPanel createPanel() {
-        panel = new JPanel();
-        panel.setLayout(new BorderLayout(10, 10));
-        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-
-        // Create title
-        JLabel title = new JLabel("CGPA Calculator", SwingConstants.CENTER);
-        title.setFont(new Font("Arial", Font.BOLD, 24));
-        panel.add(title, BorderLayout.NORTH);
-
-        // Create input panel
-        JPanel inputPanel = new JPanel(new GridLayout(NUM_COURSES + 2, 4, 5, 5));
+    public CGPACalculatorPanel() {
+        setLayout(new BorderLayout());
+        JPanel inputPanel = new JPanel(new GridLayout(0, 4, 5, 5));
+        inputPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         
-        // Add column headers
+        // Add headers
         inputPanel.add(new JLabel("Course"));
-        inputPanel.add(new JLabel("Marks (0-100)"));
+        inputPanel.add(new JLabel("Marks"));
         inputPanel.add(new JLabel("Credits"));
         inputPanel.add(new JLabel("Grade"));
-
-        marksFields = new JTextField[NUM_COURSES];
-        creditFields = new JTextField[NUM_COURSES];
-
-        for (int i = 0; i < NUM_COURSES; i++) {
-            // Course number
-            inputPanel.add(new JLabel("Course " + (i + 1)));
-
-            // Marks field
+        
+        marksFields = new JTextField[5];
+        creditFields = new JTextField[5];
+        
+        for (int i = 0; i < 5; i++) {
+            inputPanel.add(new JLabel("Course " + (i+1)));
+            
             marksFields[i] = new JTextField();
             inputPanel.add(marksFields[i]);
-
-            // Credits field
+            
             creditFields[i] = new JTextField();
             inputPanel.add(creditFields[i]);
-
-            // Grade label (will be filled automatically)
-            JLabel gradeLabel = new JLabel("");
-            gradeLabel.setForeground(Color.BLUE);
+            
+            JLabel gradeLabel = new JLabel();
             inputPanel.add(gradeLabel);
         }
-
-        // Create button panel
+        
+        // Buttons and result
         JPanel buttonPanel = new JPanel();
-        JButton calculateButton = new JButton("Calculate CGPA");
-        JButton resetButton = new JButton("Reset");
-
-        calculateButton.addActionListener(e -> calculateCGPA());
-        resetButton.addActionListener(e -> resetForm());
-
+        calculateButton = new JButton("Calculate CGPA");
+        clearButton = new JButton("Clear");
         buttonPanel.add(calculateButton);
-        buttonPanel.add(resetButton);
-
-        // Result label
-        resultLabel = new JLabel("CGPA: ", SwingConstants.CENTER);
-        resultLabel.setFont(new Font("Arial", Font.BOLD, 18));
-        resultLabel.setForeground(new Color(0, 100, 0));
-
-        // Add components to main panel
-        panel.add(inputPanel, BorderLayout.CENTER);
-        panel.add(buttonPanel, BorderLayout.SOUTH);
-        panel.add(resultLabel, BorderLayout.NORTH);
-
-        return panel;
+        buttonPanel.add(clearButton);
+        
+        resultLabel = new JLabel("CGPA: ");
+        resultLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        
+        add(inputPanel, BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.SOUTH);
+        add(resultLabel, BorderLayout.NORTH);
+        
+        // Event listeners
+        calculateButton.addActionListener(e -> calculateCGPA());
+        clearButton.addActionListener(e -> clearFields());
     }
-
+    
     private void calculateCGPA() {
-        double totalGradePoints = 0;
+        double totalPoints = 0;
         double totalCredits = 0;
-        boolean hasError = false;
-
-        for (int i = 0; i < NUM_COURSES; i++) {
-            String marksText = marksFields[i].getText().trim();
-            String creditsText = creditFields[i].getText().trim();
-
-            if (marksText.isEmpty() && creditsText.isEmpty()) {
-                continue; // Skip empty rows
-            }
-
+        
+        for (int i = 0; i < 5; i++) {
             try {
-                double marks = Double.parseDouble(marksText);
-                double credits = Double.parseDouble(creditsText);
-
-                if (marks < 0 || marks > 100) {
-                    JOptionPane.showMessageDialog(panel, 
-                        "Marks must be between 0 and 100 for Course " + (i + 1), 
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                    hasError = true;
-                    break;
-                }
-
-                if (credits <= 0) {
-                    JOptionPane.showMessageDialog(panel, 
-                        "Credits must be positive for Course " + (i + 1), 
-                        "Error", JOptionPane.ERROR_MESSAGE);
-                    hasError = true;
-                    break;
-                }
-
+                double marks = Double.parseDouble(marksFields[i].getText());
+                double credits = Double.parseDouble(creditFields[i].getText());
+                
                 double gradePoint = convertToGradePoint(marks);
-                totalGradePoints += gradePoint * credits;
+                totalPoints += gradePoint * credits;
                 totalCredits += credits;
-
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(panel, 
-                    "Please enter valid numbers for Course " + (i + 1), 
-                    "Error", JOptionPane.ERROR_MESSAGE);
-                hasError = true;
-                break;
+                // Ignore empty fields
             }
         }
-
-        if (!hasError) {
-            if (totalCredits > 0) {
-                double cgpa = totalGradePoints / totalCredits;
-                resultLabel.setText(String.format("CGPA: %.2f", cgpa));
-            } else {
-                JOptionPane.showMessageDialog(panel, 
-                    "Please enter at least one course", 
-                    "Error", JOptionPane.ERROR_MESSAGE);
-            }
+        
+        if (totalCredits > 0) {
+            double cgpa = totalPoints / totalCredits;
+            resultLabel.setText(String.format("CGPA: %.2f", cgpa));
+        } else {
+            resultLabel.setText("CGPA: 0.00");
         }
     }
-
+    
     private double convertToGradePoint(double percentage) {
         if (percentage >= 80) return 4.00;
         else if (percentage >= 75) return 3.75;
@@ -143,9 +90,9 @@ public class CGPACalculatorPanel {
         else if (percentage >= 40) return 2.00;
         else return 0.0;
     }
-
-    private void resetForm() {
-        for (int i = 0; i < NUM_COURSES; i++) {
+    
+    private void clearFields() {
+        for (int i = 0; i < 5; i++) {
             marksFields[i].setText("");
             creditFields[i].setText("");
         }
