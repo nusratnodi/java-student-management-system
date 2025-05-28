@@ -45,7 +45,7 @@ public class StudentManagementPanel implements ActionListener {
         genderLabel.setBounds(50, 240, 150, 30);
         genderLabel.setFont(labelFont);
 
-        contactLabel = new JLabel("Contact Name");
+        contactLabel = new JLabel("Contact Number");
         contactLabel.setBounds(50, 280, 150, 30);
         contactLabel.setFont(labelFont);
 
