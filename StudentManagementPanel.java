@@ -4,7 +4,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 public class StudentManagementPanel implements ActionListener {
-    private JPanel panel;
+     private JPanel panel;
     private JLabel jtitle;
     private JLabel studentName, studentID, studentGrade, dobLabel, genderLabel, contactLabel, emailLabel;
     private JTextField jstudentName, jstudentID, jstudentGrade, dobField, contactField, emailField, searchField;
@@ -17,25 +17,13 @@ public class StudentManagementPanel implements ActionListener {
     public JPanel createPanel() {
         panel = new JPanel();
         panel.setLayout(null);
-        panel.setBackground(new Color(245, 245, 245));
+        panel.setBackground(new Color(240, 240, 240)); 
 
-        // Gradient title
-        jtitle = new JLabel("STUDENT MANAGEMENT SYSTEM") {
-            @Override
-            protected void paintComponent(Graphics g) {
-                Graphics2D g2d = (Graphics2D) g;
-                g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-                GradientPaint gp = new GradientPaint(0, 0, new Color(52, 152, 219), getWidth(), 0, new Color(46, 204, 113));
-                g2d.setPaint(gp);
-                g2d.setFont(getFont());
-                g2d.drawString(getText(), 0, getHeight() - 10);
-            }
-        };
+        jtitle = new JLabel("STUDENT MANAGEMENT SYSTEM");
         jtitle.setBounds(250, 10, 700, 50);
         jtitle.setFont(new Font("Arial", Font.BOLD, 32));
-        jtitle.setOpaque(false);
+        jtitle.setForeground(new Color(0, 102, 204)); // Blue color
 
-        // Form labels
         Font labelFont = new Font("Arial", Font.PLAIN, 14);
         studentName = new JLabel("Student Name");
         studentName.setBounds(50, 80, 150, 30);
@@ -65,45 +53,30 @@ public class StudentManagementPanel implements ActionListener {
         emailLabel.setBounds(50, 320, 150, 30);
         emailLabel.setFont(labelFont);
 
-        // Text fields with styling
-        Font fieldFont = new Font("Arial", Font.PLAIN, 14);
+
         jstudentName = new JTextField();
         jstudentName.setBounds(200, 80, 200, 30);
-        jstudentName.setFont(fieldFont);
-        jstudentName.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(200, 200, 200)),
-            BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        jstudentName.setBackground(Color.WHITE);
 
         jstudentID = new JTextField();
         jstudentID.setBounds(200, 120, 200, 30);
-        jstudentID.setFont(fieldFont);
-        jstudentID.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(200, 200, 200)),
-            BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        jstudentID.setBackground(Color.WHITE);
 
         jstudentGrade = new JTextField();
         jstudentGrade.setBounds(200, 160, 200, 30);
-        jstudentGrade.setFont(fieldFont);
-        jstudentGrade.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(200, 200, 200)),
-            BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        jstudentGrade.setBackground(Color.WHITE);
 
         dobField = new JTextField();
         dobField.setBounds(200, 200, 200, 30);
-        dobField.setFont(fieldFont);
-        dobField.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(200, 200, 200)),
-            BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        dobField.setBackground(Color.WHITE);
 
         maleRadio = new JRadioButton("Male");
         maleRadio.setBounds(200, 240, 80, 30);
-        maleRadio.setFont(fieldFont);
-        maleRadio.setBackground(new Color(245, 245, 245));
+        maleRadio.setBackground(new Color(240, 240, 240));
 
         femaleRadio = new JRadioButton("Female");
         femaleRadio.setBounds(290, 240, 100, 30);
-        femaleRadio.setFont(fieldFont);
-        femaleRadio.setBackground(new Color(245, 245, 245));
+        femaleRadio.setBackground(new Color(240, 240, 240));
 
         genderGroup = new ButtonGroup();
         genderGroup.add(maleRadio);
@@ -111,37 +84,36 @@ public class StudentManagementPanel implements ActionListener {
 
         contactField = new JTextField();
         contactField.setBounds(200, 280, 200, 30);
-        contactField.setFont(fieldFont);
-        contactField.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(200, 200, 200)),
-            BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        contactField.setBackground(Color.WHITE);
 
         emailField = new JTextField();
         emailField.setBounds(200, 320, 200, 30);
-        emailField.setFont(fieldFont);
-        emailField.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(200, 200, 200)),
-            BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        emailField.setBackground(Color.WHITE);
 
-        // Styled buttons
-        addStudent = StyledButton.createStyledButton("Add Student", new Color(46, 204, 113));
+
+        addStudent = new JButton("Add Student");
         addStudent.setBounds(650, 150, 150, 35);
+        addStudent.setBackground(new Color(76, 175, 80)); // Green
+        addStudent.setForeground(Color.WHITE);
 
-        reset = StyledButton.createStyledButton("Reset", new Color(241, 196, 15));
+        reset = new JButton("Reset");
         reset.setBounds(650, 195, 150, 35);
+        reset.setBackground(new Color(255, 193, 7)); // Amber
+        reset.setForeground(Color.BLACK);
 
-        deleteRecord = StyledButton.createStyledButton("Delete Record", new Color(192, 57, 43));
+        deleteRecord = new JButton("Delete Record");
         deleteRecord.setBounds(650, 240, 150, 35);
+        deleteRecord.setBackground(new Color(244, 67, 54)); // Red
+        deleteRecord.setForeground(Color.WHITE);
 
         searchField = new JTextField();
         searchField.setBounds(50, 360, 300, 30);
-        searchField.setFont(fieldFont);
-        searchField.setBorder(BorderFactory.createCompoundBorder(
-            BorderFactory.createLineBorder(new Color(200, 200, 200)),
-            BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        searchField.setBackground(Color.WHITE);
 
-        searchButton = StyledButton.createStyledButton("Search by ID", new Color(52, 152, 219));
+        searchButton = new JButton("Search by ID");
         searchButton.setBounds(360, 360, 150, 35);
+        searchButton.setBackground(new Color(33, 150, 243)); // Blue
+        searchButton.setForeground(Color.WHITE);
 
         panel.add(jtitle);
         panel.add(studentName);
@@ -165,19 +137,18 @@ public class StudentManagementPanel implements ActionListener {
         panel.add(searchField);
         panel.add(searchButton);
 
+
         String[] columnNames = {"Student Name", "Student ID", "Student Grade", "Date of Birth", "Gender", "Contact Name", "Email"};
         tableModel = new DefaultTableModel(columnNames, 0);
 
         studentTable = new JTable(tableModel);
         studentTable.setRowHeight(25);
-        studentTable.setFont(new Font("Arial", Font.PLAIN, 13));
-        studentTable.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
-        studentTable.getTableHeader().setBackground(new Color(52, 152, 219));
+        studentTable.getTableHeader().setBackground(new Color(33, 150, 243)); 
         studentTable.getTableHeader().setForeground(Color.WHITE);
         JScrollPane scrollPane = new JScrollPane(studentTable);
         scrollPane.setBounds(50, 400, 860, 150);
-        scrollPane.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
         panel.add(scrollPane);
+
 
         addStudent.addActionListener(this);
         reset.addActionListener(this);
@@ -225,24 +196,11 @@ public class StudentManagementPanel implements ActionListener {
                     String[] data = {name, id, grade, dob, gender, contact, email};
                     tableModel.addRow(data);
                     JOptionPane.showMessageDialog(panel, "Student data added successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
-
-                    jstudentName.setText("");
-                    jstudentID.setText("");
-                    jstudentGrade.setText("");
-                    dobField.setText("");
-                    genderGroup.clearSelection();
-                    contactField.setText("");
-                    emailField.setText("");
+                    resetFields();
                 }
             }
         } else if (e.getSource() == reset) {
-            jstudentName.setText("");
-            jstudentID.setText("");
-            jstudentGrade.setText("");
-            dobField.setText("");
-            genderGroup.clearSelection();
-            contactField.setText("");
-            emailField.setText("");
+            resetFields();
         } else if (e.getSource() == deleteRecord) {
             int selectedRow = studentTable.getSelectedRow();
             if (selectedRow >= 0) {
@@ -262,8 +220,6 @@ public class StudentManagementPanel implements ActionListener {
             for (int row = 0; row < tableModel.getRowCount(); row++) {
                 if (tableModel.getValueAt(row, 1).equals(searchId)) {
                     studentTable.setRowSelectionInterval(row, row);
-                    studentTable.setSelectionBackground(new Color(46, 204, 113));
-                    studentTable.setSelectionForeground(Color.WHITE);
                     found = true;
                     break;
                 }
@@ -272,5 +228,15 @@ public class StudentManagementPanel implements ActionListener {
                 JOptionPane.showMessageDialog(panel, "Student ID not found.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
+    }
+
+    private void resetFields() {
+        jstudentName.setText("");
+        jstudentID.setText("");
+        jstudentGrade.setText("");
+        dobField.setText("");
+        genderGroup.clearSelection();
+        contactField.setText("");
+        emailField.setText("");
     }
 }
