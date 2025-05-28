@@ -1,0 +1,276 @@
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
+public class StudentManagementPanel implements ActionListener {
+    private JPanel panel;
+    private JLabel jtitle;
+    private JLabel studentName, studentID, studentGrade, dobLabel, genderLabel, contactLabel, emailLabel;
+    private JTextField jstudentName, jstudentID, jstudentGrade, dobField, contactField, emailField, searchField;
+    private JRadioButton maleRadio, femaleRadio;
+    private ButtonGroup genderGroup;
+    private JButton addStudent, reset, deleteRecord, searchButton;
+    private JTable studentTable;
+    private DefaultTableModel tableModel;
+
+    public JPanel createPanel() {
+        panel = new JPanel();
+        panel.setLayout(null);
+        panel.setBackground(new Color(245, 245, 245));
+
+        // Gradient title
+        jtitle = new JLabel("STUDENT MANAGEMENT SYSTEM") {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2d = (Graphics2D) g;
+                g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+                GradientPaint gp = new GradientPaint(0, 0, new Color(52, 152, 219), getWidth(), 0, new Color(46, 204, 113));
+                g2d.setPaint(gp);
+                g2d.setFont(getFont());
+                g2d.drawString(getText(), 0, getHeight() - 10);
+            }
+        };
+        jtitle.setBounds(250, 10, 700, 50);
+        jtitle.setFont(new Font("Arial", Font.BOLD, 32));
+        jtitle.setOpaque(false);
+
+        // Form labels
+        Font labelFont = new Font("Arial", Font.PLAIN, 14);
+        studentName = new JLabel("Student Name");
+        studentName.setBounds(50, 80, 150, 30);
+        studentName.setFont(labelFont);
+
+        studentID = new JLabel("Student ID");
+        studentID.setBounds(50, 120, 150, 30);
+        studentID.setFont(labelFont);
+
+        studentGrade = new JLabel("Student Grade");
+        studentGrade.setBounds(50, 160, 150, 30);
+        studentGrade.setFont(labelFont);
+
+        dobLabel = new JLabel("Date of Birth");
+        dobLabel.setBounds(50, 200, 150, 30);
+        dobLabel.setFont(labelFont);
+
+        genderLabel = new JLabel("Gender");
+        genderLabel.setBounds(50, 240, 150, 30);
+        genderLabel.setFont(labelFont);
+
+        contactLabel = new JLabel("Contact Name");
+        contactLabel.setBounds(50, 280, 150, 30);
+        contactLabel.setFont(labelFont);
+
+        emailLabel = new JLabel("Email");
+        emailLabel.setBounds(50, 320, 150, 30);
+        emailLabel.setFont(labelFont);
+
+        // Text fields with styling
+        Font fieldFont = new Font("Arial", Font.PLAIN, 14);
+        jstudentName = new JTextField();
+        jstudentName.setBounds(200, 80, 200, 30);
+        jstudentName.setFont(fieldFont);
+        jstudentName.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(200, 200, 200)),
+            BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+
+        jstudentID = new JTextField();
+        jstudentID.setBounds(200, 120, 200, 30);
+        jstudentID.setFont(fieldFont);
+        jstudentID.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(200, 200, 200)),
+            BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+
+        jstudentGrade = new JTextField();
+        jstudentGrade.setBounds(200, 160, 200, 30);
+        jstudentGrade.setFont(fieldFont);
+        jstudentGrade.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(200, 200, 200)),
+            BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+
+        dobField = new JTextField();
+        dobField.setBounds(200, 200, 200, 30);
+        dobField.setFont(fieldFont);
+        dobField.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(200, 200, 200)),
+            BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+
+        maleRadio = new JRadioButton("Male");
+        maleRadio.setBounds(200, 240, 80, 30);
+        maleRadio.setFont(fieldFont);
+        maleRadio.setBackground(new Color(245, 245, 245));
+
+        femaleRadio = new JRadioButton("Female");
+        femaleRadio.setBounds(290, 240, 100, 30);
+        femaleRadio.setFont(fieldFont);
+        femaleRadio.setBackground(new Color(245, 245, 245));
+
+        genderGroup = new ButtonGroup();
+        genderGroup.add(maleRadio);
+        genderGroup.add(femaleRadio);
+
+        contactField = new JTextField();
+        contactField.setBounds(200, 280, 200, 30);
+        contactField.setFont(fieldFont);
+        contactField.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(200, 200, 200)),
+            BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+
+        emailField = new JTextField();
+        emailField.setBounds(200, 320, 200, 30);
+        emailField.setFont(fieldFont);
+        emailField.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(200, 200, 200)),
+            BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+
+        // Styled buttons
+        addStudent = StyledButton.createStyledButton("Add Student", new Color(46, 204, 113));
+        addStudent.setBounds(650, 150, 150, 35);
+
+        reset = StyledButton.createStyledButton("Reset", new Color(241, 196, 15));
+        reset.setBounds(650, 195, 150, 35);
+
+        deleteRecord = StyledButton.createStyledButton("Delete Record", new Color(192, 57, 43));
+        deleteRecord.setBounds(650, 240, 150, 35);
+
+        searchField = new JTextField();
+        searchField.setBounds(50, 360, 300, 30);
+        searchField.setFont(fieldFont);
+        searchField.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(200, 200, 200)),
+            BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+
+        searchButton = StyledButton.createStyledButton("Search by ID", new Color(52, 152, 219));
+        searchButton.setBounds(360, 360, 150, 35);
+
+        panel.add(jtitle);
+        panel.add(studentName);
+        panel.add(studentID);
+        panel.add(studentGrade);
+        panel.add(dobLabel);
+        panel.add(genderLabel);
+        panel.add(contactLabel);
+        panel.add(emailLabel);
+        panel.add(jstudentName);
+        panel.add(jstudentID);
+        panel.add(jstudentGrade);
+        panel.add(dobField);
+        panel.add(maleRadio);
+        panel.add(femaleRadio);
+        panel.add(contactField);
+        panel.add(emailField);
+        panel.add(addStudent);
+        panel.add(reset);
+        panel.add(deleteRecord);
+        panel.add(searchField);
+        panel.add(searchButton);
+
+        String[] columnNames = {"Student Name", "Student ID", "Student Grade", "Date of Birth", "Gender", "Contact Name", "Email"};
+        tableModel = new DefaultTableModel(columnNames, 0);
+
+        studentTable = new JTable(tableModel);
+        studentTable.setRowHeight(25);
+        studentTable.setFont(new Font("Arial", Font.PLAIN, 13));
+        studentTable.getTableHeader().setFont(new Font("Arial", Font.BOLD, 14));
+        studentTable.getTableHeader().setBackground(new Color(52, 152, 219));
+        studentTable.getTableHeader().setForeground(Color.WHITE);
+        JScrollPane scrollPane = new JScrollPane(studentTable);
+        scrollPane.setBounds(50, 400, 860, 150);
+        scrollPane.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
+        panel.add(scrollPane);
+
+        addStudent.addActionListener(this);
+        reset.addActionListener(this);
+        deleteRecord.addActionListener(this);
+        searchButton.addActionListener(this);
+
+        return panel;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == addStudent) {
+            String name = jstudentName.getText();
+            String id = jstudentID.getText();
+            String grade = jstudentGrade.getText();
+            String dob = dobField.getText();
+            String contact = contactField.getText();
+            String email = emailField.getText();
+            String gender = maleRadio.isSelected() ? "Male" : femaleRadio.isSelected() ? "Female" : "";
+
+            if (name.isEmpty() || id.isEmpty() || grade.isEmpty() || dob.isEmpty() || contact.isEmpty() || email.isEmpty() || gender.isEmpty()) {
+                JOptionPane.showMessageDialog(panel, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if (!Utility.isValidEmail(email)) {
+                JOptionPane.showMessageDialog(panel, "Invalid email address.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if (!Utility.isValidDate(dob)) {
+                JOptionPane.showMessageDialog(panel, "Invalid date of birth. Use the format 'dd-MM-yyyy'.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if (!Utility.isValidGrade(grade)) {
+                JOptionPane.showMessageDialog(panel, "Invalid student grade. It should be a number.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if (!Utility.isNumeric(id)) {
+                JOptionPane.showMessageDialog(panel, "Invalid student ID. It should be a number.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else if (!Utility.isValidContactNumber(contact)) {
+                JOptionPane.showMessageDialog(panel, "Invalid contact number. It should be numeric.", "Error", JOptionPane.ERROR_MESSAGE);
+            } else {
+                boolean idExists = false;
+                for (int row = 0; row < tableModel.getRowCount(); row++) {
+                    if (tableModel.getValueAt(row, 1).equals(id)) {
+                        idExists = true;
+                        break;
+                    }
+                }
+
+                if (idExists) {
+                    JOptionPane.showMessageDialog(panel, "Student ID already exists.", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    String[] data = {name, id, grade, dob, gender, contact, email};
+                    tableModel.addRow(data);
+                    JOptionPane.showMessageDialog(panel, "Student data added successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+                    jstudentName.setText("");
+                    jstudentID.setText("");
+                    jstudentGrade.setText("");
+                    dobField.setText("");
+                    genderGroup.clearSelection();
+                    contactField.setText("");
+                    emailField.setText("");
+                }
+            }
+        } else if (e.getSource() == reset) {
+            jstudentName.setText("");
+            jstudentID.setText("");
+            jstudentGrade.setText("");
+            dobField.setText("");
+            genderGroup.clearSelection();
+            contactField.setText("");
+            emailField.setText("");
+        } else if (e.getSource() == deleteRecord) {
+            int selectedRow = studentTable.getSelectedRow();
+            if (selectedRow >= 0) {
+                tableModel.removeRow(selectedRow);
+                JOptionPane.showMessageDialog(panel, "Student data deleted successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(panel, "Please select a record to delete.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else if (e.getSource() == searchButton) {
+            String searchId = searchField.getText();
+            if (searchId.isEmpty()) {
+                JOptionPane.showMessageDialog(panel, "Please enter a Student ID to search.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            boolean found = false;
+            for (int row = 0; row < tableModel.getRowCount(); row++) {
+                if (tableModel.getValueAt(row, 1).equals(searchId)) {
+                    studentTable.setRowSelectionInterval(row, row);
+                    studentTable.setSelectionBackground(new Color(46, 204, 113));
+                    studentTable.setSelectionForeground(Color.WHITE);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                JOptionPane.showMessageDialog(panel, "Student ID not found.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+}
