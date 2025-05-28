@@ -1,0 +1,23 @@
+# Ignore all .class files
+*.class
+
+# Ignore IDE specific files
+*.iml
+.idea/
+*.swp
+*.swo
+
+# Ignore build directories
+bin/
+out/
+target/
+build/
+
+# Ignore OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
