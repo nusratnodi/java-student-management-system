@@ -7,7 +7,6 @@ public class StudentManagementSystem extends JFrame {
         setSize(1200, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-
         JPanel sidebar = new JPanel();
         sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
         sidebar.setPreferredSize(new Dimension(200, getHeight()));
@@ -18,11 +17,9 @@ public class StudentManagementSystem extends JFrame {
         studentManagementBtn.setBackground(new Color(52, 152, 219)); 
         studentManagementBtn.setForeground(Color.WHITE);
 
-    
         CardLayout cardLayout = new CardLayout();
         JPanel mainPanel = new JPanel(cardLayout);
         mainPanel.setBackground(Color.WHITE);
-
 
         mainPanel.add(new StudentManagementPanel().createPanel(), "StudentManagement");
 
