@@ -4,7 +4,7 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 public class StudentManagementPanel implements ActionListener {
-     private JPanel panel;
+    private JPanel panel;
     private JLabel jtitle;
     private JLabel studentName, studentID, studentGrade, dobLabel, genderLabel, contactLabel, emailLabel;
     private JTextField jstudentName, jstudentID, jstudentGrade, dobField, contactField, emailField, searchField;
@@ -22,7 +22,7 @@ public class StudentManagementPanel implements ActionListener {
         jtitle = new JLabel("STUDENT MANAGEMENT SYSTEM");
         jtitle.setBounds(250, 10, 700, 50);
         jtitle.setFont(new Font("Arial", Font.BOLD, 32));
-        jtitle.setForeground(new Color(0, 102, 204)); // Blue color
+        jtitle.setForeground(new Color(0, 102, 204)); 
 
         Font labelFont = new Font("Arial", Font.PLAIN, 14);
         studentName = new JLabel("Student Name");
@@ -93,17 +93,17 @@ public class StudentManagementPanel implements ActionListener {
 
         addStudent = new JButton("Add Student");
         addStudent.setBounds(650, 150, 150, 35);
-        addStudent.setBackground(new Color(76, 175, 80)); // Green
+        addStudent.setBackground(new Color(76, 175, 80)); 
         addStudent.setForeground(Color.WHITE);
 
         reset = new JButton("Reset");
         reset.setBounds(650, 195, 150, 35);
-        reset.setBackground(new Color(255, 193, 7)); // Amber
+        reset.setBackground(new Color(255, 193, 7)); 
         reset.setForeground(Color.BLACK);
 
         deleteRecord = new JButton("Delete Record");
         deleteRecord.setBounds(650, 240, 150, 35);
-        deleteRecord.setBackground(new Color(244, 67, 54)); // Red
+        deleteRecord.setBackground(new Color(244, 67, 54)); 
         deleteRecord.setForeground(Color.WHITE);
 
         searchField = new JTextField();
@@ -112,7 +112,7 @@ public class StudentManagementPanel implements ActionListener {
 
         searchButton = new JButton("Search by ID");
         searchButton.setBounds(360, 360, 150, 35);
-        searchButton.setBackground(new Color(33, 150, 243)); // Blue
+        searchButton.setBackground(new Color(33, 150, 243)); 
         searchButton.setForeground(Color.WHITE);
 
         panel.add(jtitle);
